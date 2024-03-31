@@ -1,6 +1,7 @@
 package org.arouabendaya.theresidencehotel.service;
 
 import lombok.RequiredArgsConstructor;
+import org.arouabendaya.theresidencehotel.exception.InternalServerException;
 import org.arouabendaya.theresidencehotel.exception.RessourceNotFoundException;
 import org.arouabendaya.theresidencehotel.model.Room;
 import org.arouabendaya.theresidencehotel.repository.RoomRepository;
@@ -16,13 +17,13 @@ import java.util.List;
 import java.util.Optional;
 
 
+
 @Service
 @RequiredArgsConstructor
 public class RoomService implements IRoomService {
     private final RoomRepository roomRepository;
 
     @Override
-    //add room to our database
     public Room addNewRoom(MultipartFile file, String roomType, BigDecimal roomPrice) throws IOException, SQLException {
         Room room = new Room();
         room.setRoomType(roomType);
@@ -44,19 +45,16 @@ public class RoomService implements IRoomService {
         return roomRepository.findDistincRoomTypes();
     }
 
-
-
     @Override
     public List<Room> getAllRooms() {
         return roomRepository.findAll();
-
     }
 
     @Override
     public byte[] getRoomPhotoByRoomId(Long roomId) throws SQLException {
         Optional<Room> theRoom = roomRepository.findById(roomId);
         if (theRoom.isEmpty()) {
-            throw new RessourceNotFoundException("");
+            throw new RessourceNotFoundException("Sorry, Room not found!");
         }
         Blob photoBlob = theRoom.get().getPhoto();
         if (photoBlob != null) {
@@ -65,29 +63,6 @@ public class RoomService implements IRoomService {
         return null
                 ;
     }
-    /*************I hava stopped here*************/
-
-
-    @Override
-    public void deleteRoom(Long roomId) {
-
-    }
-
-    @Override
-    public Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes) {
-        return null;
-    }
-
-    @Override
-    public Optional<Room> getRoomById(Long roomId) {
-        return Optional.empty();
-    }
-}
-/*
-
-
-
-
 
     @Override
     public void deleteRoom(Long roomId) {
@@ -123,4 +98,5 @@ public class RoomService implements IRoomService {
         return Optional.of(roomRepository.findById(roomId).get());
     }
 
-}*/
+}
+
