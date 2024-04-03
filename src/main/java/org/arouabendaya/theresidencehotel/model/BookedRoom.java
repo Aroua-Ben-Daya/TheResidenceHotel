@@ -9,14 +9,16 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 
+
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookedRoom {
-    @Id //set the primary key of the table
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //how the primary key is going to get generated
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long BookingId ;
 
     @Column (name = "check_In")
@@ -24,7 +26,7 @@ public class BookedRoom {
 
 
     @Column (name = "check_Out")
-    private LocalDate getCheckInDateDate ;
+    private LocalDate CheckOutDate;
 
     @Column (name = "guest_FullName")
     private String guestFullName ;
@@ -41,11 +43,11 @@ public class BookedRoom {
     @Column (name = "total_guest")
     private int totalNumOfGuest ;
 
-    @Setter
-    @Column (name = "confirmtion_Code")
-    private String bookingConformationCode ;
 
-    //A many-to-one mapping : many instances of guest entity are mapped to one instance of room entity
+    @Column (name = "confirmation_Code")
+    private String bookingConfirmationCode ;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
 
     @JoinColumn (name = "room_id")
@@ -65,6 +67,7 @@ public class BookedRoom {
         NumOfChildren = numOfChildren ;
         calculateTotalNumberOfGuest ();
     }
-
-
+    public void setBookingConfirmationCode(String bookingConfirmationCode) {
+        this.bookingConfirmationCode = bookingConfirmationCode;
+    }
 }

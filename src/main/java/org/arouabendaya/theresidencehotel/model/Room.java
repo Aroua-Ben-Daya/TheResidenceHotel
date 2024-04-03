@@ -14,15 +14,18 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+
+
 public class Room {
-    @Id //set the primary key
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id ;
     private  String roomType ;
     private BigDecimal roomPrice ;
     private boolean isBooked = false ;
 
-    @Lob //large object
+    @Lob
     private Blob photo ;
     @OneToMany (mappedBy="room" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookedRoom> bookings ;
@@ -40,8 +43,11 @@ public class Room {
         booking.setRoom(this);
         isBooked =true ;
         String bookingCode = RandomStringUtils.randomNumeric(10);
-        booking.setBookingConformationCode(bookingCode);
+        booking.setBookingConfirmationCode(bookingCode);
 
     }
+
+
+
 
 }

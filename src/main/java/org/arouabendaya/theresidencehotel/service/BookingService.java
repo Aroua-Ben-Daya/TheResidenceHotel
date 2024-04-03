@@ -43,14 +43,14 @@ public class BookingService implements IBookingService {
         }else{
             throw new InvalidBookingRequestException("Sorry this room is not available for the selected date");
         }
-        return bookingRequest.getBookingConformationCode();
+        return bookingRequest.getBookingConfirmationCode();
     }
 
 
 
     @Override
     public BookedRoom findByBookingConfirmationCode(String confirmationCode) {
-        return bookingRepository.findBybookingConformationCode(confirmationCode);
+        return bookingRepository.findBybookingConfirmationCode(confirmationCode);
     }
 
     private boolean roomIsAvailable(BookedRoom bookingRequest, List<BookedRoom> existingBookings) {

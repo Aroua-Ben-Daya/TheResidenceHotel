@@ -103,7 +103,7 @@ public class RoomController {
         List<BookingResponse> bookingInfo = bookings.stream().map(booking ->new BookingResponse(booking.getBookingId(),
                 booking.getCheckInDate(),
                 booking.getCheckOutDate(),/* check out */
-                booking.getBookingConformationCode())).toList();
+                booking.getBookingConfirmationCode())).toList();
         byte[] photoByte = null ;
         Blob photoBlob = room.getPhoto();
         if(photoBlob != null){

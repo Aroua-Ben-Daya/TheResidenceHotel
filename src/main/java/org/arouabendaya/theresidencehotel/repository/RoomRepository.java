@@ -11,3 +11,4 @@ public interface RoomRepository extends JpaRepository<Room,Long> {
     @Query("SELECT distinct r.roomType from Room r")
     List<String> findDistincRoomTypes();
 }
+

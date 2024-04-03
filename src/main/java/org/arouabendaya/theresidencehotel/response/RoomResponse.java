@@ -29,12 +29,7 @@ public class RoomResponse {
         this.roomType = roomType;
         this.roomPrice = roomPrice;
         this.isBooked = isBooked;
-        this.photo = photoBytes != null ? Base64.encodeBase64String(photoBytes) : null; //convert the photo to a real one
+        this.photo = photoBytes != null ? Base64.encodeBase64String(photoBytes) : null;
         this.bookings = bookings;
     }
-
-
-
-
-
 }
