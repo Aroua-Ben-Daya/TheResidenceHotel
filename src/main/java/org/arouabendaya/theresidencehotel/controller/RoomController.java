@@ -76,6 +76,7 @@ public class RoomController {
     }
 
     @PutMapping("/update/{roomId}")
+    //update a room
     public ResponseEntity<RoomResponse> updateRoom(
             @PathVariable Long roomId,
             @RequestParam(required = false) String roomType ,

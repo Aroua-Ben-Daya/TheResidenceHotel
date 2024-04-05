@@ -72,6 +72,7 @@ public class RoomService implements IRoomService {
     }
 
     @Override
+    //update Room
     public Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes)  {
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new RessourceNotFoundException("Room not found"));
@@ -85,9 +86,6 @@ public class RoomService implements IRoomService {
 
             }
         }
-
-
-
         return roomRepository.save(room);
     }
 
