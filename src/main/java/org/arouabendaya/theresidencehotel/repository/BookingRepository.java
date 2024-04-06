@@ -9,5 +9,5 @@ public interface BookingRepository extends JpaRepository<BookedRoom, Long> {
 
     List<BookedRoom> findByRoomId(Long roomId);
 
-    BookedRoom findBybookingConfirmationCode(String confirmationCode);
+    BookedRoom findByBookingConfirmationCode(String confirmationCode);
 }

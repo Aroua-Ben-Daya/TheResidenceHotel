@@ -19,15 +19,15 @@ public class BookingResponse {
     private int NumOfAdults ;
     private int NumOfChildren ;
     private int totalNumOfGuest ;
-    private String bookingConformationCode ;
+    private String bookingConfirmationCode ;
 
 
     public BookingResponse(Long bookingId, LocalDate checkInDate, LocalDate getCheckInDateDate,
-                           String bookingConformationCode ) {
+                           String bookingConfirmationCode ) {
         BookingId = bookingId;
         this.checkInDate = checkInDate;
         this.getCheckInDateDate = getCheckInDateDate;
-        this.bookingConformationCode = bookingConformationCode;
+        this.bookingConfirmationCode = bookingConfirmationCode;
 
 
     }

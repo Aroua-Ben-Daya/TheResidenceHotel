@@ -19,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/bookings")
+
 public class BookingController {
     private final IBookingService bookingService ;
     private final IRoomService roomService ;
