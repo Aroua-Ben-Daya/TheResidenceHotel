@@ -1,9 +1,15 @@
 package org.arouabendaya.theresidencehotel.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.security.core.GrantedAuthority;
+
 import lombok.RequiredArgsConstructor;
 import org.arouabendaya.theresidencehotel.exception.UserAlreadyExistsException;
 import org.arouabendaya.theresidencehotel.model.User;
+import org.arouabendaya.theresidencehotel.request.LoginRequest;
+import org.arouabendaya.theresidencehotel.response.JwtResponse;
+import org.arouabendaya.theresidencehotel.security.jwt.JwtUtils;
+import org.arouabendaya.theresidencehotel.security.user.HotelUserDetails;
 import org.arouabendaya.theresidencehotel.service.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +29,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthController {
     private final IUserService userService;
-   /* private final AuthenticationManager authenticationManager;
-    private final JwtUtils jwtUtils;*/
+   private final AuthenticationManager authenticationManager;
+    private final JwtUtils jwtUtils;
 
     @PostMapping("/register-user")
     public ResponseEntity<?> registerUser(@RequestBody User user){
@@ -37,7 +43,7 @@ public class AuthController {
         }
     }
 
-    /*
+
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest request){
         Authentication authentication =
@@ -54,6 +60,6 @@ public class AuthController {
                 userDetails.getEmail(),
                 jwt,
                 roles));
-    }*/
+    }
 }
 
