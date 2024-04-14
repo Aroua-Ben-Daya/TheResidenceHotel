@@ -61,7 +61,7 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }
-/*
+
     @GetMapping("/user/{email}/bookings")
     public ResponseEntity<List<BookingResponse>> getBookingsByUserEmail(@PathVariable String email) {
         List<BookedRoom> bookings = bookingService.getBookingsByUserEmail(email);
@@ -73,7 +73,7 @@ public class BookingController {
         return ResponseEntity.ok(bookingResponses);
     }
 
- */
+
 
     @DeleteMapping("/booking/{bookingId}/delete")
     public void cancelBooking(@PathVariable Long bookingId){
