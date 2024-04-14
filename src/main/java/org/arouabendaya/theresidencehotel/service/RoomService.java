@@ -2,7 +2,7 @@ package org.arouabendaya.theresidencehotel.service;
 
 import lombok.RequiredArgsConstructor;
 import org.arouabendaya.theresidencehotel.exception.InternalServerException;
-import org.arouabendaya.theresidencehotel.exception.RessourceNotFoundException;
+import org.arouabendaya.theresidencehotel.exception.ResourceNotFoundException;
 import org.arouabendaya.theresidencehotel.model.Room;
 import org.arouabendaya.theresidencehotel.repository.RoomRepository;
 import org.springframework.stereotype.Service;
@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,18 +23,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RoomService implements IRoomService {
     private final RoomRepository roomRepository;
-
     @Override
-    public Room addNewRoom(MultipartFile file, String roomType, BigDecimal roomPrice) throws IOException, SQLException {
+    public Room addNewRoom(MultipartFile file, String roomType, BigDecimal roomPrice) throws SQLException, IOException {
         Room room = new Room();
         room.setRoomType(roomType);
         room.setRoomPrice(roomPrice);
-        if (!file.isEmpty()) {
+        if (!file.isEmpty()){
             byte[] photoBytes = file.getBytes();
             Blob photoBlob = new SerialBlob(photoBytes);
             room.setPhoto(photoBlob);
-
-
         }
         return roomRepository.save(room);
     }
@@ -51,49 +49,46 @@ public class RoomService implements IRoomService {
     @Override
     public byte[] getRoomPhotoByRoomId(Long roomId) throws SQLException {
         Optional<Room> theRoom = roomRepository.findById(roomId);
-        if (theRoom.isEmpty()) {
-            throw new RessourceNotFoundException("Sorry, Room not found!");
+        if(theRoom.isEmpty()){
+            throw new ResourceNotFoundException("Sorry, Room not found!");
         }
         Blob photoBlob = theRoom.get().getPhoto();
-        if (photoBlob != null) {
+        if(photoBlob != null){
             return photoBlob.getBytes(1, (int) photoBlob.length());
         }
-        return null
-                ;
+        return null;
     }
 
     @Override
     public void deleteRoom(Long roomId) {
         Optional<Room> theRoom = roomRepository.findById(roomId);
-        if (theRoom.isPresent()) {
+        if(theRoom.isPresent()){
             roomRepository.deleteById(roomId);
         }
-
     }
 
     @Override
-    //update Room
-    public Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes)  {
-        Room room = roomRepository.findById(roomId)
-                .orElseThrow(() -> new RessourceNotFoundException("Room not found"));
+    public Room updateRoom(Long roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes) {
+        Room room = roomRepository.findById(roomId).get();
         if (roomType != null) room.setRoomType(roomType);
         if (roomPrice != null) room.setRoomPrice(roomPrice);
-        if (photoBytes != null && photoBytes.length > 0){
+        if (photoBytes != null && photoBytes.length > 0) {
             try {
                 room.setPhoto(new SerialBlob(photoBytes));
-            }catch (SQLException ex){
-                throw new InternalServerException("Error updating photo");
-
+            } catch (SQLException ex) {
+                throw new InternalServerException("Fail updating room");
             }
         }
         return roomRepository.save(room);
     }
 
     @Override
-    //get room by id function
     public Optional<Room> getRoomById(Long roomId) {
         return Optional.of(roomRepository.findById(roomId).get());
     }
 
+    @Override
+    public List<Room> getAvailableRooms(LocalDate checkInDate, LocalDate checkOutDate, String roomType) {
+        return roomRepository.findAvailableRoomsByDatesAndType(checkInDate, checkOutDate, roomType);
+    }
 }
-
